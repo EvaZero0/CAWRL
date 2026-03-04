@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAWRL – Web Crawler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@400;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+  <div class="layout">
+
+    <!-- Header -->
+    <header>
+      <div>
+        <div class="logo">CAWRL<span>_</span></div>
+        <div class="tagline">Web Crawler &amp; Broken Link Checker</div>
+      </div>
+      <div class="header-right">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-label">Ready</span>
+      </div>
+    </header>
+
+    <!-- Control panel -->
+    <div class="control-panel">
+      <div>
+        <div class="input-group">
+          <label>Target URL</label>
+          <div class="url-input-wrap">
+            <span class="url-prefix">https://</span>
+            <input type="text" id="url-input" placeholder="example.com" autocomplete="off" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="options-row">
+
+          <!-- Respect robots.txt toggle -->
+          <div class="toggle-wrap" onclick="toggleOption('robots')">
+            <button class="toggle active" id="toggle-robots"></button>
+            <span class="toggle-label">Respect robots.txt</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Max pages input -->
+          <div class="num-input-wrap" id="wrap-max-pages">
+            <label>Max. pages</label>
+            <input type="number" id="max-pages" value="200" min="1" max="99999">
+          </div>
+
+          <!-- No limit toggle -->
+          <div class="toggle-wrap" onclick="toggleOption('unlimited')">
+            <button class="toggle" id="toggle-unlimited"></button>
+            <span class="toggle-label" id="label-unlimited">No limit</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <!-- Crawl delay -->
+          <div class="num-input">
+            <label>Delay (s)</label>
+            <input type="number" id="crawl-delay" value="0.5" min="0" max="10" step="0.1">
+          </div>
+
+          <!-- Robots.txt status -->
+          <div id="robots-info" class="robots-info"></div>
+
+          <!-- Unlimited warning -->
+          <div class="unlimited-warning" id="unlimited-warning">
+            ⚠ No page limit – crawl may run for a very long time
+          </div>
+
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button class="btn-start" id="btn-start" onclick="startCrawl()">▶ Start</button>
+        <button class="btn-stop" id="btn-stop" onclick="stopCrawl()" disabled>■ Stop</button>
+      </div>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat-card" id="card-pages">
+        <div class="stat-label">Pages crawled</div>
+        <div class="stat-value" id="stat-pages">0</div>
+      </div>
+      <div class="stat-card" id="card-broken">
+        <div class="stat-label">Broken links</div>
+        <div class="stat-value" id="stat-broken">0</div>
+      </div>
+      <div class="stat-card" id="card-time">
+        <div class="stat-label">Avg. load time</div>
+        <div class="stat-value" id="stat-time">–</div>
+      </div>
+      <div class="stat-card" id="card-queue">
+        <div class="stat-label">In queue</div>
+        <div class="stat-value" id="stat-queue">–</div>
+      </div>
+    </div>
+
+    <!-- Main grid -->
+    <div class="main-grid">
+
+      <!-- Live log -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Live Log</span>
+          <span class="badge" id="log-badge">–</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div id="log">
+          <div class="empty-state">
+            <span class="icon">🕷️</span>
+            No crawl started yet
+          </div>
+        </div>
+      </div>
+
+      <!-- Broken links -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Broken Links</span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="badge" id="broken-badge">0</span>
+            <button class="btn-secondary" id="btn-export" onclick="exportJSON()" disabled>↓ Export JSON</button>
+          </div>
+        </div>
+        <div id="broken-list">
+          <div class="empty-state">
+            <span class="icon">🕸️</span>
+            No broken links found
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+
+</html>
