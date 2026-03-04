@@ -1,4 +1,4 @@
-# 🐍CAWRL🕷️
+# 🐍 CAWRL 🕷️
 
 A web crawler and broken link checker with a browser-based dashboard. Built with Python and FastAPI.
 
@@ -27,10 +27,14 @@ A web crawler and broken link checker with a browser-based dashboard. Built with
 ### With Docker (recommended)
 
 ```bash
+git clone https://github.com/EvaZero0/CAWRL
+cd cawrl
 docker compose up --build
 ```
 
 Then open [http://localhost:8000](http://localhost:8000) in your browser.
+
+No Python installation required – Docker handles everything.
 
 ### Without Docker
 
