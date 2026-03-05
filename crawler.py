@@ -75,7 +75,7 @@ def extract_links(html, url, start_url, sites):
     for a in soup.find_all("a"):
         href = a.get("href")
         if href and not ("@" in href or "#" in href or href.startswith("mailto:") or href.startswith("tel:") or href.startswith("javascript:")):
-            absolute_href = urljoin(url, href)                       #Build absolute URL from the current URL and the found link
+            absolute_href = normalize_url(urljoin(url, href))                       #Build absolute URL from the current URL and the found link
             if absolute_href.startswith(start_url):                  #Only add links that are on the same domain
                 if absolute_href not in sites:
                     sites.append(absolute_href)
